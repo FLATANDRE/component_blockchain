@@ -1,0 +1,50 @@
+---
+# ingress-nginx IngressClass
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: network-nginx
+  namespace: besu
+spec:
+  controller: k8s.io/ingress-nginx
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-besu-access
+  namespace: besu
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
+spec:
+  ingressClassName: network-nginx
+  rules:
+  - http:
+      paths:
+      - path: /rpc
+        pathType: Prefix
+        backend:
+          service:
+            name: besu-validator1
+            port:
+              name: json-rpc
+      - path: /graphql
+        pathType: Prefix
+        backend:
+          service:
+            name: besu-validator1
+            port:
+              name: graphql
+      #- path: /member1
+      #  pathType: Prefix
+      #  backend:
+      #    service:
+      #      name: besu-bootnode1
+      #      port:
+      #        name: rlpx
+      
+    
