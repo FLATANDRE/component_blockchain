@@ -73,10 +73,10 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 1024Mi
+              memory: 256MiB
             limits:
               cpu: 500m
-              memory: 2048Mi
+              memory: 256MiB
           env:
             - name: POD_IP
               valueFrom:
