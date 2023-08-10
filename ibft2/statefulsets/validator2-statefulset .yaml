@@ -3,14 +3,14 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: validator1-sa
+  name: validator2-sa
   namespace: besu
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: validator1-key-read-role
+  name: validator2-key-read-role
   namespace: besu
 rules:
 - apiGroups: [""]
@@ -24,43 +24,43 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: validator1-rb
+  name: validator2-rb
   namespace: besu
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: validator1-key-read-role
+  name: validator2-key-read-role
 subjects:
 - kind: ServiceAccount
-  name: validator1-sa
+  name: validator2-sa
   namespace: besu
 
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: validator1
+  name: validator2
   labels:
-    app: validator1
+    app: validator2
   namespace: besu
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: validator1
-  serviceName: besu-validator1
+      app: validator2
+  serviceName: besu-validator2
   template:
     metadata:
       labels:
-        app: validator1
+        app: validator2
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9545"
         prometheus.io/path: "/metrics"
     spec:
-      serviceAccountName: validator1-sa
+      serviceAccountName: validator2-sa
       containers:
-        - name: validator1
+        - name: validator2
           image: hyperledger/besu:latest
           imagePullPolicy: IfNotPresent
           resources:
@@ -127,12 +127,12 @@ spec:
               exec /opt/besu/bin/besu \
                 --node-private-key-file=/secrets/nodekey \
                 --config-file=/etc/besu/config.toml \
-                --Xdns-enabled=true --Xdns-update-enabled=true --Xnat-kube-service-name=besu-validator1 \
+                --Xdns-enabled=true --Xdns-update-enabled=true --Xnat-kube-service-name=besu-validator2 \
                 --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.besu-validator1.besu.svc.cluster.local:30303,enode://${VALIDATOR2_PUBKEY}@validator2-0.besu-validator2.besu.svc.cluster.local:30303
       volumes:
         - name: key
           secret:
-            secretName: besu-validator1-key
+            secretName: besu-validator2-key
         - name: genesis-config
           configMap:
             name: besu-genesis-configmap
