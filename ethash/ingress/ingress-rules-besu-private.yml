@@ -39,12 +39,12 @@ spec:
             name: besu-node
             port:
               name: graphql
-      #- path: /member1
-      #  pathType: Prefix
-      #  backend:
-      #    service:
-      #      name: besu-bootnode1
-      #      port:
-      #        name: rlpx
+      - path: /member1
+        pathType: Prefix
+        backend:
+          service:
+            name: besu-bootnode1
+            port:
+              name: rlpx
       
     

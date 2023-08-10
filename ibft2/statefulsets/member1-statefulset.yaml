@@ -204,6 +204,16 @@ spec:
                 configMapKeyRef:
                   name: besu-validators-configmap
                   key: validator2PubKey
+            - name: VALIDATOR3_PUBKEY
+              valueFrom:
+                configMapKeyRef:
+                  name: besu-validators-configmap
+                  key: validator3PubKey
+            - name: VALIDATOR4_PUBKEY
+              valueFrom:
+                configMapKeyRef:
+                  name: besu-validators-configmap
+                  key: validator4PubKey
           volumeMounts:
             - name: key
               mountPath: /secrets
@@ -248,7 +258,7 @@ spec:
                 --privacy-public-key-file=/secrets/tm.pub \
                 --privacy-onchain-groups-enabled=false \
                 --Xdns-enabled=true --Xdns-update-enabled=true --Xnat-kube-service-name=besu-member1 \
-                --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.besu-validator1.besu.svc.cluster.local:30303,enode://${VALIDATOR2_PUBKEY}@validator2-0.besu-validator2.besu.svc.cluster.local:30303
+                --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.besu-validator1.besu.svc.cluster.local:30303,enode://${VALIDATOR2_PUBKEY}@validator2-0.besu-validator2.besu.svc.cluster.local:30303,enode://${VALIDATOR3_PUBKEY}@validator3-0.besu-validator3.besu.svc.cluster.local:30303,enode://${VALIDATOR4_PUBKEY}@validator4-0.besu-validator4.besu.svc.cluster.local:30303
 
       volumes:
         - name: key
