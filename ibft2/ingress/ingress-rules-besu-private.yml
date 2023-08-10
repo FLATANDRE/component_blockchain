@@ -46,27 +46,6 @@ spec:
             name: besu-validator1
             port:
               name: json-rpc
-      - path: /validator2
-        pathType: Prefix
-        backend:
-          service:
-            name: besu-validator2
-            port:
-              name: json-rpc
-      - path: /validator3
-        pathType: Prefix
-        backend:
-          service:
-            name: besu-validator3
-            port:
-              name: json-rpc
-      - path: /validator4
-        pathType: Prefix
-        backend:
-          service:
-            name: besu-validator4
-            port:
-              name: json-rpc
       - path: /member1
         pathType: Prefix
         backend:
@@ -93,34 +72,6 @@ spec:
         backend:
           service:
             name: besu-member2
-            port:
-              name: tessera-tp
-      - path: /member3
-        pathType: Prefix
-        backend:
-          service:
-            name: besu-member3
-            port:
-              name: json-rpc
-      - path: /member3private
-        pathType: Prefix
-        backend:
-          service:
-            name: besu-member3
-            port:
-              name: tessera-tp
-      - path: /member4
-        pathType: Prefix
-        backend:
-          service:
-            name: besu-member4
-            port:
-              name: json-rpc
-      - path: /member4private
-        pathType: Prefix
-        backend:
-          service:
-            name: besu-member4
             port:
               name: tessera-tp
       

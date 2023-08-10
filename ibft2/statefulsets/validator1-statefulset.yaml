@@ -68,7 +68,7 @@ spec:
               cpu: 100m
               memory: 256Mi
             limits:
-              cpu: 500m
+              cpu: 150m
               memory: 256Mi
           env:
             - name: POD_IP
@@ -84,11 +84,11 @@ spec:
                 configMapKeyRef:
                   name: besu-validators-configmap
                   key: validator1PubKey
-            - name: VALIDATOR2_PUBKEY
-              valueFrom:
-                configMapKeyRef:
-                  name: besu-validators-configmap
-                  key: validator2PubKey
+            #- name: VALIDATOR2_PUBKEY
+            #  valueFrom:
+            #    configMapKeyRef:
+            #      name: besu-validators-configmap
+            #      key: validator2PubKey
           volumeMounts:
             - name: key
               mountPath: /secrets
@@ -128,7 +128,7 @@ spec:
                 --node-private-key-file=/secrets/nodekey \
                 --config-file=/etc/besu/config.toml \
                 --Xdns-enabled=true --Xdns-update-enabled=true --Xnat-kube-service-name=besu-validator1 \
-                --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.besu-validator1.besu.svc.cluster.local:30303,enode://${VALIDATOR2_PUBKEY}@validator2-0.besu-validator2.besu.svc.cluster.local:30303
+                --bootnodes=enode://${VALIDATOR1_PUBKEY}@validator1-0.besu-validator1.besu.svc.cluster.local:30303
       volumes:
         - name: key
           secret:
