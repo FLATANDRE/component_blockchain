@@ -173,7 +173,7 @@ spec:
                   /tessera/bin/tessera -configfile /data/tm/tessera-config-09.json
 
         - name: member1-besu
-          image: hyperledger/besu:latest
+          image: hyperledger/besu:23.7.0
           imagePullPolicy: IfNotPresent
           resources:
             requests:
